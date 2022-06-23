@@ -1,0 +1,29 @@
+{
+  "checksum": "972ac1a437d5fa11fe2ddd6397c69f2a",
+  "root": "dao-cameligo@link-dev:./esy.json",
+  "node": {
+    "tezos-ligo-fa2@1.0.2@d41d8cd9": {
+      "id": "tezos-ligo-fa2@1.0.2@d41d8cd9",
+      "name": "tezos-ligo-fa2",
+      "version": "1.0.2",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://registry.npmjs.org/tezos-ligo-fa2/-/tezos-ligo-fa2-1.0.2.tgz#sha1:a4e6fbb7cbe4521be592c2888fa6aa6f4d85d949"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [],
+      "devDependencies": []
+    },
+    "dao-cameligo@link-dev:./esy.json": {
+      "id": "dao-cameligo@link-dev:./esy.json",
+      "name": "dao-cameligo",
+      "version": "link-dev:./esy.json",
+      "source": { "type": "link-dev", "path": ".", "manifest": "esy.json" },
+      "overrides": [],
+      "dependencies": [ "tezos-ligo-fa2@1.0.2@d41d8cd9" ],
+      "devDependencies": []
+    }
+  }
+}
