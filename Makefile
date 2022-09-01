@@ -1,8 +1,7 @@
 SHELL := /bin/bash
 
-ifndef LIGO
-LIGO=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:stable
-endif
+ligo_compiler=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:stable
+PROTOCOL_OPT=
 # ^ use LIGO en var bin if configured, otherwise use docker
 
 project_root=--project-root .
@@ -12,10 +11,10 @@ help:
 	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 	awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-compile = $(LIGO) compile contract $(project_root) ./src/$(1) -o ./compiled/$(2) $(3)
+compile = $(ligo_compiler) compile contract $(project_root) ./src/$(1) -o ./compiled/$(2) $(3) $(PROTOCOL_OPT)
 # ^ compile contract to michelson or micheline
 
-test = $(LIGO) run test $(project_root) ./test/$(1)
+test = $(ligo_compiler) run test $(project_root) ./test/$(1) $(PROTOCOL_OPT)
 # ^ run given test file
 
 compile: ## compile contracts
@@ -33,7 +32,7 @@ deploy: ## deploy
 
 install: ## install dependencies
 	@if [ ! -f ./.env ]; then cp .env.dist .env ; fi
-	@$(LIGO) install
+	@$(ligo_compiler) install
 	@npm i
 
 compile-lambda: ## compile a lambda (F=./lambdas/empty_operation_list.mligo make compile-lambda)
@@ -41,7 +40,7 @@ compile-lambda: ## compile a lambda (F=./lambdas/empty_operation_list.mligo make
 ifndef F
 	@echo 'please provide an init file (F=)'
 else
-	@$(LIGO) compile expression $(project_root) cameligo lambda_ --init-file $(F)
+	@$(ligo_compiler) compile expression $(project_root) cameligo lambda_ --init-file $(F) $(PROTOCOL_OPT)
 	# ^ the lambda is expected to be bound to the name 'lambda_'
 endif
 
@@ -51,9 +50,9 @@ ifndef F
 	@echo 'please provide an init file (F=)'
 else
 	@echo 'Packed:'
-	@$(LIGO) run interpret $(project_root) 'Bytes.pack(lambda_)' --init-file $(F)
+	@$(ligo_compiler) run interpret $(project_root) 'Bytes.pack(lambda_)' --init-file $(F) $(PROTOCOL_OPT)
 	@echo "Hash (sha256):"
-	@$(LIGO) run interpret $(project_root) 'Crypto.sha256(Bytes.pack(lambda_))' --init-file $(F)
+	@$(ligo_compiler) run interpret $(project_root) 'Crypto.sha256(Bytes.pack(lambda_))' --init-file $(F) $(PROTOCOL_OPT)
 endif
 
 .PHONY: test

@@ -9,12 +9,12 @@ import metadata from "./metadata.json";
 dotenv.config();
 
 // Initialize RPC connection
-const Tezos = new TezosToolkit(process.env.NODE_URL);
+const Tezos = new TezosToolkit(process.env.RPC);
 
 // Deploy to configured node with configured secret key
 const deploy = async () => {
   try {
-    const signer = await InMemorySigner.fromSecretKey(process.env.SECRET_KEY);
+    const signer = await InMemorySigner.fromSecretKey(process.env.ADMIN_PK);
 
     Tezos.setProvider({ signer });
 
@@ -60,6 +60,7 @@ const deploy = async () => {
     console.log(`[OK] ${op.contractAddress}`);
   } catch (e) {
     console.log(e);
+    return process.exit(1);
   }
 };
 
