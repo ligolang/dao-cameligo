@@ -14,7 +14,7 @@ type originated = {
 }
 
 let originate (tok_amount : nat) =
-    let f = "./test/bootstrap/single_asset.mligo" in
+    let f = "../bootstrap/single_asset.mligo" in
     let init_storage, owners, ops = SingleAsset_helper.get_initial_storage(
         tok_amount, tok_amount, tok_amount
     ) in
