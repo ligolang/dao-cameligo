@@ -20,15 +20,9 @@ see [example `FA2` in the test directory](./test/bootstrap/single_asset.mligo).
 ## Requirements
 
 The contract is written in `cameligo` flavour of [LigoLANG](https://ligolang.org/),
-to be able to compile the contract, you need either:
+to be able to compile the contract, you need [docker](https://docs.docker.com/engine/install/).
 
-- a [ligo binary](https://ligolang.org/docs/intro/installation#static-linux-binary),
-  in this case, to use the binary, you need to have set up a `LIGO` environment variable,
-  pointing to the binary (see [Makefile](./Makefile))
-- or [docker](https://docs.docker.com/engine/install/)
-
-For deploy scripts, you also need to have [nodejs](https://nodejs.org/en/) installed,
-up to version 14 and docker if you wish to deploy on a sandbox.
+For deploy scripts, you also need to have [nodejs](https://nodejs.org/en/) installed, up to version 14.
 
 ## Usage
 
