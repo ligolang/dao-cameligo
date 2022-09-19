@@ -1,13 +1,13 @@
 # DAO-cameligo
 
-A modular example DAO contract on Tezos written in Ligolang.  
+A modular example DAO contract on Tezos written in Ligolang.
 
 ## Intro
 
 This example DAO allows FA2 token holders to vote on proposals, which trigger
-on-chain changes when accepted.  
+on-chain changes when accepted.
 It is using **token based quorum voting**, requiring a given threshold of
-participating tokens for a proposal to pass.  
+participating tokens for a proposal to pass.
 The contract code uses Ligo [modules](https://ligolang.org/docs/language-basics/modules/),
 and the [tezos-ligo-fa2](https://www.npmjs.com/package/tezos-ligo-fa2)
 [package](https://ligolang.org/docs/advanced/package-management).
@@ -34,6 +34,10 @@ up to version 14 and docker if you wish to deploy on a sandbox.
 
 1. Run `make install` to install dependencies
 2. Run `make` to see available commands
+3. You can also override `make` parameters by running :
+```sh
+make compile ligo_compile=<LIGO_EXECUTABLE> PROTOCOL_OPT="--protocol <PROTOCOL>"
+```
 
 ## Documentation
 
