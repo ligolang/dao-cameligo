@@ -1,9 +1,9 @@
 SHELL := /bin/bash
 
-ligo_compiler=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:stable
+ligo_compiler?=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:stable
 # ^ Override this variable when you run make command by make <COMMAND> ligo_compiler=<LIGO_EXECUTABLE>
 # ^ Otherwise use default one (you'll need docker)
-PROTOCOL_OPT=
+PROTOCOL_OPT?=
 
 project_root=--project-root .
 # ^ required when using packages
