@@ -1,7 +1,10 @@
 {
   "name": "@ligo/dao",
   "version": "1.0.0",
+  "type": "contract",
   "license": "MIT",
+  "storage_fn": "main",
+  "storage_arg": "a b",
   "description": "A modular example DAO contract on Tezos written in Ligolang.",
   "repository": {
     "type": "git",
