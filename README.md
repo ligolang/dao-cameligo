@@ -36,7 +36,7 @@ up to version 14 and docker if you wish to deploy on a sandbox.
 2. Run `make` to see available commands
 3. You can also override `make` parameters by running :
 ```sh
-make compile ligo_compiler=<LIGO_EXECUTABLE> PROTOCOL_OPT="--protocol <PROTOCOL>"
+make compile ligo_compiler=<LIGO_EXECUTABLE> protocol_opt="--protocol <PROTOCOL>"
 ```
 
 ## Documentation
