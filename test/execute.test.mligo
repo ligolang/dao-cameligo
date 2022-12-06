@@ -70,10 +70,10 @@ let test_success_operation_list =
 
     (* Pack an operation that will send 2 tokens from DAO to owner2 *)
     let owner2_amount_to_receive = 2n in
-    let packed = Bytes.pack(OperationList(
-        Token_helper.create_transfer_callable(
+    let op_list = Token_helper.create_transfer_callable (
             tok.addr, dao.addr, owner2, owner2_amount_to_receive
-        )) : DAO.Lambda.t) in
+    ) in
+    let packed = Bytes.pack(OperationList(op_list) : DAO.Lambda.t) in
 
     let owner2_amount_locked = 25n in
     let hash_ = Some(Crypto.sha256 packed) in
