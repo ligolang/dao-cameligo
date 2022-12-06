@@ -49,7 +49,7 @@ let transfer (contr, from_, to_, amount_ : contr * address * address * nat) =
 
 (* Batch add [operators] to [contr] contract *)
 let add_operators (operators, contr : SingleAsset.operator list * SingleAsset.parameter contract) =
-    let f (ys,x : (SingleAsset.unit_update list * SingleAsset.operator)) : SingleAsset.unit_update list = Add_operator(x) :: ys in
+    let f (ys,x : (SingleAsset.unit_update list * SingleAsset.operator)) : SingleAsset.unit_update list = (Add_operator(x) : SingleAsset.unit_update) :: ys in
     let add_operator = List.fold_left f ([] : SingleAsset.unit_update list) operators in
     let r = Test.transfer_to_contract contr (Update_operators(add_operator)) 0mutez in
     Assert.tx_success r

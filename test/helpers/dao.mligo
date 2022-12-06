@@ -11,7 +11,7 @@ type originated = {
 }
 
 (* Some dummy values intended to be used as placeholders *)
-let dummy_packed = Bytes.pack (OperationList(fun () -> ([] : operation list)))
+let dummy_packed = Bytes.pack (OperationList(fun () -> ([] : operation list)) : DAO.Lambda.t)
 let dummy_hash = Crypto.sha256 dummy_packed
 
 let dummy_proposal : DAO.Proposal.make_params = {
@@ -132,7 +132,7 @@ let assert_executed (taddr, n : taddr * nat) =
     let s = Test.get_storage taddr in
     match Big_map.find_opt n s.outcomes with
         None -> Test.failwith "The outcome should exists"
-        | Some(_, state) -> assert(state = Executed)
+        | Some(_, state) -> assert(state = (Executed : DAO.Outcome.state))
 
 (* Assert outcomes [bm] big map have an entry for key [k] and has given [s] state *)
 let assert_proposal_state (bm, k, s : DAO.Storage.outcomes * nat * DAO.Outcome.state) =
