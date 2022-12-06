@@ -76,7 +76,7 @@ let cancel (outcome_key_opt, s : nat option * storage) : result =
                 (p.creator = Tezos.get_sender())
                 Errors.not_creator in
             let _check_not_executed = assert_with_error
-                (state <> Executed)
+                (state <> (Executed : Outcome.state))
                 Errors.already_executed in
             let () = Timelock._check_locked(p.timelock) in
             Storage.update_outcome(outcome_key, (p, Canceled), s)))
