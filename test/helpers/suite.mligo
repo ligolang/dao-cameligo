@@ -1,6 +1,6 @@
 #import "./token.mligo" "Token_helper"
 #import "./dao.mligo" "DAO_helper"
-#import "tezos-ligo-fa2/test/helpers/list.mligo" "List_helper"
+#import "@ligo/fa/test/helpers/list.mligo" "List_helper"
 
 (*
     Creates a proposal on [dao] with [tok] as governance_token,
