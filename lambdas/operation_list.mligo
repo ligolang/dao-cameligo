@@ -1,5 +1,5 @@
 #import "../src/lambda.mligo" "Lambda"
-#import "tezos-ligo-fa2/lib/fa2/asset/single_asset.mligo" "SingleAsset"
+#import "@ligo/fa/lib/fa2/asset/single_asset.mligo" "SingleAsset"
 
 (* Sample lambda that calls an FA2 transfer entrypoint *)
 

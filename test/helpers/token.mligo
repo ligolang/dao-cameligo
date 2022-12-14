@@ -1,5 +1,5 @@
-#import "tezos-ligo-fa2/lib/fa2/asset/single_asset.mligo" "SingleAsset"
-#import "tezos-ligo-fa2/test/fa2/single_asset.test.mligo" "SingleAsset_helper"
+#import "@ligo/fa/lib/fa2/asset/single_asset.mligo" "SingleAsset"
+#import "@ligo/fa/test/fa2/single_asset.test.mligo" "SingleAsset_helper"
 #import "./assert.mligo" "Assert"
 
 (* Some types for readability *)
@@ -43,7 +43,7 @@ type single_asset_transfer_param = {
 let transfer (contr, from_, to_, amount_ : contr * address * address * nat) =
     let () = Test.set_source from_ in
     let transfer_requests = ([
-      ({from_=from_; tx=([{to_=to_;amount=amount_}] : SingleAsset.atomic_trans list)});
+      ({from_=from_; txs=([{to_;amount=amount_;token_id=0n}] : SingleAsset.atomic_trans list)});
     ] : SingleAsset.transfer) in
     Test.transfer_to_contract_exn contr (Transfer transfer_requests) 0tez
 
@@ -81,7 +81,7 @@ let create_transfer_callable (addr, from_, to_, amount_ : address * address * ad
     fun() -> match (Tezos.get_entrypoint_opt "%transfer" addr : SingleAsset.transfer contract option) with
         Some(c) ->
             let transfer_requests = ([
-              ({from_=from_; tx=([{to_=to_;amount=amount_}] : SingleAsset.atomic_trans list)});
+              ({from_=from_; txs=([{to_;amount=amount_;token_id=0n}] : SingleAsset.atomic_trans list)});
             ] : SingleAsset.transfer) in
             let op = Tezos.transaction transfer_requests 0mutez c in [op]
         | None -> failwith("TOKEN_CONTRACT_NOT_FOUND")
