@@ -43,7 +43,7 @@ const rpcUrl = process.env.RPC_URL;
 const governanceToken = process.env.GOVERNANCE_TOKEN;
 const burnAddress = process.env.BURN_ADDRESS;
 
-if (![pk, rpcUrl, governanceToken, burnAddress].find((v) => !!v)) {
+if (![pk, rpcUrl, governanceToken, burnAddress].find(v => !!v)) {
   console.log(
     chalk.redBright`Couldn't find env variables. Have you renamed ` +
       chalk.red.bold.underline`deploy/.env.dist` +
@@ -65,12 +65,12 @@ if (!rpcUrl) {
 }
 
 if (!governanceToken) {
-  missingEnvVarLog("RPC_URL");
+  missingEnvVarLog("GOVERNANCE_TOKEN");
   process.exit(-1);
 }
 
 if (!burnAddress) {
-  missingEnvVarLog("RPC_URL");
+  missingEnvVarLog("BURN_ADDRESS");
   process.exit(-1);
 }
 
