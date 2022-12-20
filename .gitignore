@@ -1,7 +1,9 @@
-**/compiled/
+**/node_modules
+.DS_Store
 .ligo/
 _esy/
-.env
-scripts/metadata.json
-.DS_Store
-**/node_modules
+/compiled
+**/compiled
+/deploy/metadata.json
+/deploy/deploy.js
+**/.env

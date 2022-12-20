@@ -33,8 +33,11 @@ up to version 14 and docker if you wish to deploy on a sandbox.
 ## Usage
 
 1. Run `make install` to install dependencies
-2. Run `make` to see available commands
-3. You can also override `make` parameters by running :
+2. Run `make compile` to compile the contracts
+3. Run `make deploy` to deploy the contracts. You have to rename `deploy/.env.dist` to `deploy/.env` and **fill the required variables**.
+
+You can also override `make` parameters by running :
+
 ```sh
 make compile ligo_compiler=<LIGO_EXECUTABLE> protocol_opt="--protocol <PROTOCOL>"
 ```
