@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-ligo_compiler?=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:stable
+ligo_compiler?=docker run --rm -v "$(PWD)":"$(PWD)" -w "$(PWD)" ligolang/ligo:0.57.0
 # ^ Override this variable when you run make command by make <COMMAND> ligo_compiler=<LIGO_EXECUTABLE>
 # ^ Otherwise use default one (you'll need docker)
 protocol_opt?=
@@ -20,21 +20,28 @@ test = $(ligo_compiler) run test $(project_root) ./test/$(1) $(protocol_opt)
 
 compile: ## compile contracts
 	@if [ ! -d ./compiled ]; then mkdir ./compiled ; fi
+	@echo "Compiling contracts..."
 	@$(call compile,main.mligo,dao.tz)
 	@$(call compile,main.mligo,dao.json,--michelson-format json)
+	@echo "Compiled contracts"
 
 clean: ## clean up
 	@rm -rf compiled
 
-deploy: ## deploy
-	@if [ ! -f ./scripts/metadata.json ]; then cp scripts/metadata.json.dist \
-        scripts/metadata.json ; fi
-	@npx ts-node ./scripts/deploy.ts
+deploy: node_modules deploy.js
+
+deploy.js:
+	@if [ ! -f ./deploy/metadata.json ]; then cp deploy/metadata.json.dist deploy/metadata.json ; fi
+	@echo "Running deploy script\n"
+	@cd deploy && npm start
+
+node_modules:
+	@echo "Installing deploy script dependencies"
+	@cd deploy && npm install
+	@echo ""
 
 install: ## install dependencies
-	@if [ ! -f ./.env ]; then cp .env.dist .env ; fi
 	@$(ligo_compiler) install
-	@npm i
 
 compile-lambda: ## compile a lambda (F=./lambdas/empty_operation_list.mligo make compile-lambda)
 # ^ helper to compile lambda from a file, used during development of lambdas
