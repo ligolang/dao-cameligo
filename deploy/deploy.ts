@@ -43,7 +43,7 @@ const rpcUrl = process.env.RPC_URL;
 const governanceToken = process.env.GOVERNANCE_TOKEN;
 const burnAddress = process.env.BURN_ADDRESS;
 
-if (![pk, rpcUrl, governanceToken, burnAddress].find(v => !!v)) {
+if (![pk, rpcUrl, governanceToken, burnAddress].find((v) => !!v)) {
   console.log(
     chalk.redBright`Couldn't find env variables. Have you renamed ` +
       chalk.red.bold.underline`deploy/.env.dist` +
@@ -135,6 +135,11 @@ const deploy = async () => {
         chalk.yellow.bold(origination.contractAddress),
       endMessage: chalk.green`Contract confirmed!`,
     });
+
+    console.log(
+      chalk.green`\nContract address: \n- ` +
+        chalk.green.underline`${origination.contractAddress}`
+    );
   } catch (e) {
     console.log("");
     console.log(chalk.redBright`Error during deployment:`);
