@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "A modular example DAO contract on Tezos written in Ligolang.",
-  "devDependencies": {
+  "dependencies": {
     "@taquito/signer": "^15.0.0",
     "@taquito/taquito": "^15.0.0",
     "dotenv": "^16.0.0",
