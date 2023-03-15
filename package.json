@@ -13,7 +13,7 @@
   "author": "ligoLANG <https://ligolang.org/>",
   "main": "src/main.mligo",
   "dependencies": {
-    "@ligo/fa": "1.0.0"
+    "@ligo/fa": "1.0.1"
   },
   "bugs": {
     "url": "https://github.com/ligolang/dao-cameligo/issues"

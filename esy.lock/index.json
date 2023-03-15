@@ -1,15 +1,15 @@
 {
-  "checksum": "43640ac55616ff98319f6a79c2c18402",
+  "checksum": "ce8479008de1b2261bccf6c2f40aef2e",
   "root": "@ligo/dao@link-dev:./package.json",
   "node": {
-    "@ligo/fa@1.0.0@d41d8cd9": {
-      "id": "@ligo/fa@1.0.0@d41d8cd9",
+    "@ligo/fa@1.0.1@d41d8cd9": {
+      "id": "@ligo/fa@1.0.1@d41d8cd9",
       "name": "@ligo/fa",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://packages.ligolang.org/-/api/@ligo/fa/-/@ligo/fa-1.0.0.tgz#sha1:7789d54f1353780322c07d3000febe1f25864fef"
+          "archive:https://packages.ligolang.org/-/api/@ligo/fa/-/@ligo/fa-1.0.1.tgz#sha1:08a730e6eab7b69ce2c3a606dd94e8dd05065759"
         ]
       },
       "overrides": [],
@@ -26,7 +26,7 @@
         "manifest": "package.json"
       },
       "overrides": [],
-      "dependencies": [ "@ligo/fa@1.0.0@d41d8cd9" ],
+      "dependencies": [ "@ligo/fa@1.0.1@d41d8cd9" ],
       "devDependencies": []
     }
   }
