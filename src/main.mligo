@@ -140,7 +140,7 @@ let end_vote (s : storage) : result =
                 s.config.deposit_amount)]
             ), Storage.add_outcome(outcome, s)
 
-let main (action, store : parameter * storage) : result =
+let main (action : parameter) (store : storage) : result =
     let _check_amount_is_zero = assert_with_error
         (Tezos.get_amount() = 0tez)
         Errors.not_zero_amount
