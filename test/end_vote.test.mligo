@@ -15,7 +15,7 @@ let bootstrap () =
     let base_storage = DAO_helper.base_storage in
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n;
+        voting_period = 360n;
     } in
     let dao_storage = { base_storage with config = config } in
     Bootstrap.boot(init_tok_amount, dao_storage)

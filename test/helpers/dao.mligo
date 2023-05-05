@@ -31,7 +31,7 @@ let base_config : DAO.Storage.Config.t = {
     super_majority = 80n;
     start_delay = 360n;
     voting_period = 1440n;
-    timelock_delay = 360n;
+    timelock_delay = 180n;
     timelock_period = 720n;
     burn_address = ("tz1burnburnburnburnburnburnburjAYjjX": address);
 }

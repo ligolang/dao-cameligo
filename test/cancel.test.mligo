@@ -38,7 +38,7 @@ let test_success_current_proposal =
 let test_success_accepted_proposal =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n;
+        voting_period = 360n;
         timelock_delay = 3000n } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
@@ -80,7 +80,7 @@ let test_failure_not_creator =
 let test_failure_timelock_unlocked =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n; } in
+        voting_period = 360n; } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
@@ -95,7 +95,7 @@ let test_failure_timelock_unlocked =
 let test_failure_already_executed =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n; } in
+        voting_period = 360n; } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
