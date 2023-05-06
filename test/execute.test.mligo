@@ -20,7 +20,7 @@ let base_storage = DAO_helper.base_storage
 let test_success =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n; } in
+        voting_period = 360n; } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
@@ -39,7 +39,7 @@ let test_success =
 let test_success_parameter_changed =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n; } in
+        voting_period = 360n; } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
@@ -62,7 +62,7 @@ let test_success_parameter_changed =
 let test_success_operation_list =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n; } in
+        voting_period = 360n; } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
     let owner2 = List_helper.nth_exn 2 tok.owners in
@@ -101,7 +101,7 @@ let test_failure_no_outcome =
 let test_failure_timelock_delay_not_elapsed =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n;
+        voting_period = 360n;
         timelock_delay = 1800n } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
@@ -117,8 +117,8 @@ let test_failure_timelock_delay_not_elapsed =
 let test_failure_timelock_relocked =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n;
-        timelock_period = 10n } in
+        voting_period = 360n;
+        timelock_period = 5n } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
@@ -133,7 +133,7 @@ let test_failure_timelock_relocked =
 let test_failure_unpack_mismatch =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n } in
+        voting_period = 360n } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
@@ -149,7 +149,7 @@ let test_failure_unpack_mismatch =
 let test_failure_hash_not_match =
     let config = { base_config with
         start_delay = 10n;
-        voting_period = 1800n } in
+        voting_period = 360n } in
     let dao_storage = { base_storage with config = config } in
     let (tok, dao, _) = bootstrap(dao_storage) in
 
