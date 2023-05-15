@@ -11,9 +11,9 @@ type votes = (address, t) map
 *)
 let count (votes : votes) : (nat * nat * nat) =
   let sum =
-    fun ((for, against), (_, (choice, nb)) : (nat * nat) * (address * (t))) ->
+    fun ((for_, against), (_, (choice, nb)) : (nat * nat) * (address * (t))) ->
       if choice
-      then (for + nb, against)
-      else (for, against + nb) in
-  let (for, against) = Map.fold sum votes (0n, 0n) in
-  (for + against, for, against)
+      then (for_ + nb, against)
+      else (for_, against + nb) in
+  let (for_, against) = Map.fold sum votes (0n, 0n) in
+  (for_ + against, for_, against)
