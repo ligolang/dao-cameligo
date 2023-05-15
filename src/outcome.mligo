@@ -24,13 +24,13 @@ let make (
     super_majority
     : Proposal.t * nat * nat * nat * nat
 ) : t =
-    let (total, for, against) = Vote.count(p.votes) in
+    let (total, for_, against) = Vote.count(p.votes) in
     let state = (if ((total / total_supply * 100n) < refund_threshold)
         then Rejected_(WithoutRefund)
-        else if ((for / total * 100n) < super_majority)
+        else if ((for_ / total * 100n) < super_majority)
             || ((total / total_supply * 100n) < quorum_threshold)
         then Rejected_(WithRefund)
-        else if for > against then (Accepted : state) else Rejected_(WithRefund)) in
+        else if for_ > against then (Accepted : state) else Rejected_(WithRefund)) in
     (p, state)
 
 let get_executable_proposal(outcome : t) : Proposal.t =
