@@ -2,5 +2,5 @@
 
 (* Extension of FA2 to be used as governance token of the DAO *)
 
-[@view] let total_supply (_, _s : unit * storage) : nat =
+[@view] let total_supply (_ : unit) (_s : storage) : nat =
     30n

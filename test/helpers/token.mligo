@@ -19,7 +19,7 @@ let originate (tok_amount : nat) =
         tok_amount, tok_amount, tok_amount
     ) in
     let v_mich = Test.run (fun (x:SingleAsset.Storage.t) -> x) init_storage in
-    let (addr, _, _) = Test.originate_from_file f "main" (["total_supply"]: string list) v_mich 0tez in
+    let (addr, _, _) = Test.originate_from_file f v_mich 0tez in
     let taddr : taddr = Test.cast_address addr in
     let contr = Test.to_contract taddr in
     {
