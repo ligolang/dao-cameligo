@@ -3,8 +3,8 @@
 #import "./assert.mligo" "Assert"
 
 (* Some types for readability *)
-type taddr = (SingleAsset.parameter, SingleAsset.storage) typed_address
-type contr = SingleAsset.parameter contract
+type taddr = (SingleAsset parameter_of, SingleAsset.storage) typed_address
+type contr = SingleAsset parameter_of contract
 type originated = {
     addr: address;
     taddr: taddr;
@@ -19,7 +19,7 @@ let originate (tok_amount : nat) =
         tok_amount, tok_amount, tok_amount
     ) in
     let v_mich = Test.run (fun (x:SingleAsset.Storage.t) -> x) init_storage in
-    let (addr, _, _) = Test.originate_from_file f "main" (["total_supply"]: string list) v_mich 0tez in
+    let (addr, _, _) = Test.originate_from_file f v_mich 0tez in
     let taddr : taddr = Test.cast_address addr in
     let contr = Test.to_contract taddr in
     {
@@ -48,7 +48,7 @@ let transfer (contr, from_, to_, amount_ : contr * address * address * nat) =
     Test.transfer_to_contract_exn contr (Transfer transfer_requests) 0tez
 
 (* Batch add [operators] to [contr] contract *)
-let add_operators (operators, contr : SingleAsset.operator list * SingleAsset.parameter contract) =
+let add_operators (operators, contr : SingleAsset.operator list * SingleAsset parameter_of contract) =
     let f (ys,x : (SingleAsset.unit_update list * SingleAsset.operator)) : SingleAsset.unit_update list = (Add_operator(x) : SingleAsset.unit_update) :: ys in
     let add_operator = List.fold_left f ([] : SingleAsset.unit_update list) operators in
     let r = Test.transfer_to_contract contr (Update_operators(add_operator)) 0mutez in

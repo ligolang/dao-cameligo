@@ -2,8 +2,8 @@
 #import "./assert.mligo" "Assert"
 
 (* Some types for readability *)
-type taddr = (DAO.parameter, DAO.storage) typed_address
-type contr = DAO.parameter contract
+type taddr = (DAO parameter_of, DAO.storage) typed_address
+type contr = DAO parameter_of contract
 type originated = {
     addr: address;
     taddr: taddr;
@@ -51,13 +51,13 @@ let base_storage : DAO.storage = {
 
 (* Originate a DAO contract with given init_storage storage *)
 let originate (init_storage: DAO.storage) =
-    let (taddr, _, _) = Test.originate DAO.main init_storage 0tez in
+    let (taddr, _, _) = Test.originate_module (contract_of DAO) init_storage 0tez in
     let contr = Test.to_contract taddr in
     let addr = Tezos.address contr in
     { addr = addr; taddr = taddr; contr = contr }
 
 (* Call entry point of DAO contr contract *)
-let call (p, contr : DAO.parameter * contr) =
+let call (p, contr : DAO parameter_of * contr) =
     Test.transfer_to_contract contr p 0mutez
 
 (* Entry points call helpers *)

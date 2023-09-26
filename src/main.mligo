@@ -9,20 +9,11 @@
 #import "./vault.mligo" "Vault"
 #import "./timelock.mligo" "Timelock"
 
-type parameter =
-    [@layout:comb]
-    | Propose of Proposal.make_params
-    | Cancel of nat option
-    | Lock of Vault.amount_
-    | Release of Vault.amount_
-    | Execute of Outcome.execute_params
-    | Vote of Vote.choice
-    | End_vote
-
 type storage = Storage.t
 type result = operation list * storage
 
-let execute (outcome_key, packed, s: nat * bytes * storage) : result =
+[@entry] let execute (p : Outcome.execute_params) (s : storage) : result =
+    let { outcome_key; packed } = p in
     let proposal = (match Big_map.find_opt outcome_key s.outcomes with
         None -> failwith Errors.outcome_not_found
         | Some(o) -> Outcome.get_executable_proposal(o)) in
@@ -42,7 +33,7 @@ let execute (outcome_key, packed, s: nat * bytes * storage) : result =
                 Storage.update_config(f,s)
             )
 
-let propose (p, s : Proposal.make_params * storage) : result =
+[@entry] let propose (p : Proposal.make_params) (s : storage) : result =
     match s.proposal with
         Some(_) -> failwith Errors.proposal_already_exists
         | None -> [
@@ -55,7 +46,7 @@ let propose (p, s : Proposal.make_params * storage) : result =
                 Proposal.make(p, s.config.start_delay, s.config.voting_period),
                 s)
 
-let cancel (outcome_key_opt, s : nat option * storage) : result =
+[@entry] let cancel (outcome_key_opt : nat option) (s : storage) : result =
    [Token.transfer(
         s.governance_token,
         Tezos.get_self_address(),
@@ -81,7 +72,7 @@ let cancel (outcome_key_opt, s : nat option * storage) : result =
             let () = Timelock._check_locked(p.timelock) in
             Storage.update_outcome(outcome_key, (p, Canceled), s)))
 
-let lock (amount_, s : nat * storage) : result =
+[@entry] let lock (amount_ : nat) (s : storage) : result =
     let () = Proposal._check_no_vote_ongoing(s.proposal) in
     let current_amount = Vault.get_for_user(s.vault, Tezos.get_sender()) in
 
@@ -94,7 +85,7 @@ let lock (amount_, s : nat * storage) : result =
         Tezos.get_sender(),
         current_amount + amount_), s)
 
-let release (amount_, s : nat * storage) : result =
+[@entry] let release (amount_ : nat) (s : storage) : result =
     let () = Proposal._check_no_vote_ongoing(s.proposal) in
     let current_amount = Vault.get_for_user_exn(s.vault, Tezos.get_sender()) in
     let _check_balance = assert_with_error
@@ -107,14 +98,14 @@ let release (amount_, s : nat * storage) : result =
         Tezos.get_sender(),
         abs(current_amount - amount_)), s)
 
-let vote (choice, s : bool * storage) : storage =
-    match s.proposal with
+[@entry] let vote (choice : bool) (s : storage) : result =
+    Constants.no_operation, (match s.proposal with
         None -> failwith Errors.no_proposal
         | Some(p) -> let () = Proposal._check_is_voting_period(p) in
             let amount_ = Vault.get_for_user_exn(s.vault, Tezos.get_sender()) in
-            Storage.update_votes(p, (choice, amount_), s)
+            Storage.update_votes(p, (choice, amount_), s))
 
-let end_vote (s : storage) : result =
+[@entry] let end_vote (_ : unit) (s : storage) : result =
     match s.proposal with
         None -> failwith Errors.no_proposal
         | Some(p) -> let () = Proposal._check_voting_period_ended(p) in
@@ -139,16 +130,3 @@ let end_vote (s : storage) : result =
                 transfer_to_addr,
                 s.config.deposit_amount)]
             ), Storage.add_outcome(outcome, s)
-
-let main (action : parameter) (store : storage) : result =
-    let _check_amount_is_zero = assert_with_error
-        (Tezos.get_amount() = 0tez)
-        Errors.not_zero_amount
-    in match action with
-        Propose p -> propose(p, store)
-        | Cancel n_opt -> cancel(n_opt, store)
-        | Lock n -> lock(n, store)
-        | Release n -> release(n, store)
-        | Execute p -> execute(p.outcome_key, p.packed, store)
-        | Vote v -> Constants.no_operation, vote(v, store)
-        | End_vote -> end_vote(store)
